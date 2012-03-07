@@ -32,6 +32,12 @@ class Fontforge < Formula
       s.gsub! "ln -s /usr/local/bin/fontforge", "ln -s $(bindir)/fontforge"
     end
 
+    if MacOS.xcode_version >= "4.3"
+      inreplace ["gutils/giomime.c", "fontforge/startui.c", "fontforge/macbinary.c"],
+        "/Developer/Headers/FlatCarbon",
+        "/Applications/Xcode.app/Contents/Developer/Headers/FlatCarbon"
+    end
+    
     system "make"
     system "make install"
   end
